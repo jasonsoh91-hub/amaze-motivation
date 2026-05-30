@@ -25,7 +25,7 @@ const Youtube = ({ className }: { className?: string }) => (
 
 // 3D Book Mockup Component with actual image
 const BookMockup = () => (
-  <div className="relative w-64 h-80 md:w-80 md:h-96 mx-auto perspective-1000">
+  <div className="relative w-56 h-80 md:w-72 md:h-[28rem] mx-auto perspective-1000">
     <div className="relative w-full h-full transform-style-3d animate-float">
       {/* Book shadow */}
       <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-4 bg-black/40 blur-xl rounded-full"></div>
@@ -429,7 +429,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-black text-white mb-1">Amaze Motivation</h3>
+              <h3 className="text-3xl font-black text-white mb-2 leading-tight tracking-wide">Amaze Motivation</h3>
               <p className="text-purple-200/80 font-medium">Igniting greatness, one day at a time.</p>
             </div>
 

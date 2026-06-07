@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,13 +12,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "7 Days to Clarity | Free Guide by Amaze Motivation",
-  description: "Stop feeling stuck and overwhelmed. Get our free step-by-step guide to gain crystal-clear clarity on your goals, purpose, and next steps. Join 10,000+ go-getters.",
-  keywords: ["motivation", "clarity", "personal development", "goal setting", "self-improvement", "life coaching"],
+  title: "7 Days to Clarity | Free Guided Self-Reflection Workbook",
+  description: "Download the free 7 Days to Clarity guide and use seven simple reflection exercises to understand your patterns, clear mental noise and reset your direction.",
+  keywords: ["motivation", "clarity", "self-reflection", "personal development", "mental clarity", "mindfulness"],
   openGraph: {
-    title: "7 Days to Clarity | Free Guide by Amaze Motivation",
-    description: "Stop feeling stuck and overwhelmed. Get our free step-by-step guide to gain crystal-clear clarity on your goals, purpose, and next steps.",
+    title: "7 Days to Clarity — Free Self-Reflection Guide",
+    description: "Pause the noise, understand your patterns and reset your direction with one guided exercise a day.",
     type: "website",
   },
 };
@@ -31,8 +43,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

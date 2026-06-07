@@ -45,16 +45,15 @@ const BookMockup = () => (
   </div>
 )
 
-export default function Home() {
+export default function LeadMagnetV2Page() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!name || !email) return
+    if (!email) return
 
     setIsSubmitting(true)
 
@@ -62,9 +61,9 @@ export default function Home() {
     await new Promise(resolve => setTimeout(resolve, 1500))
 
     // Store in localStorage for demo (replace with your backend/database)
-    const leads = JSON.parse(localStorage.getItem('amaze_leads') || '[]')
-    leads.push({ name, email, date: new Date().toISOString() })
-    localStorage.setItem('amaze_leads', JSON.stringify(leads))
+    const leads = JSON.parse(localStorage.getItem('amaze_leads_v2') || '[]')
+    leads.push({ email, date: new Date().toISOString() })
+    localStorage.setItem('amaze_leads_v2', JSON.stringify(leads))
 
     setIsSubmitted(true)
     setIsSubmitting(false)
@@ -79,27 +78,27 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-amber-50">
+    <div className="min-h-screen bg-[#fbf9f5]">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-violet-100/50">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#fbf9f5]/90 backdrop-blur-md border-b border-[#34285a]/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-violet-900 tracking-tight">Amaze Motivation</h1>
+              <h1 className="text-xl font-bold text-[#34285a] tracking-tight">Amaze Motivation</h1>
             </div>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-6">
               <button
                 onClick={scrollToWhatsInside}
-                className="text-violet-700 hover:text-violet-900 font-medium transition-colors duration-200"
+                className="text-[#48454f] hover:text-[#34285a] font-medium transition-colors duration-200"
               >
                 What&apos;s Inside
               </button>
               <button
                 onClick={scrollToForm}
-                className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md min-h-[44px]"
+                className="bg-gradient-to-r from-[#34285a] via-[#873da6] to-[#faa21b] hover:from-[#4b3f72] hover:via-[#9d4eb8] hover:to-[#ffb547] text-white font-semibold px-6 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md min-h-[44px]"
               >
                 Get the Free Guide
               </button>
@@ -108,7 +107,7 @@ export default function Home() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center text-violet-700"
+              className="md:hidden w-10 h-10 flex items-center justify-center text-[#34285a]"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -120,13 +119,13 @@ export default function Home() {
             <div className="md:hidden mt-4 pb-4 space-y-3">
               <button
                 onClick={() => { scrollToWhatsInside(); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-violet-700 hover:text-violet-900 font-medium py-2"
+                className="block w-full text-left text-[#48454f] hover:text-[#34285a] font-medium py-2"
               >
                 What&apos;s Inside
               </button>
               <button
                 onClick={() => { scrollToForm(); setMobileMenuOpen(false); }}
-                className="block w-full bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-full text-center min-h-[44px]"
+                className="block w-full bg-gradient-to-r from-[#34285a] via-[#873da6] to-[#faa21b] text-white font-semibold px-6 py-3 rounded-full text-center min-h-[44px]"
               >
                 Get the Free Guide
               </button>
@@ -137,11 +136,11 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-amber-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
-          <div className="absolute top-40 right-10 w-96 h-96 bg-violet-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+        {/* V2 Arched Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full opacity-10 border-[1px] border-[#34285a] rounded-full [clip-path:ellipse(50%_100%_at_50%_100%)]"></div>
+          <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#873da6]/10 blur-[100px] rounded-full"></div>
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-[#ffb961]/20 blur-[100px] rounded-full"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-20">
@@ -149,48 +148,36 @@ export default function Home() {
             {/* Left Content */}
             <div className="text-center lg:text-left order-2 lg:order-1">
               {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2 bg-violet-100/50 px-4 py-2 rounded-full mb-6 border border-violet-200/50">
-                <Sparkles className="w-4 h-4 text-violet-600" />
-                <span className="text-violet-700 text-sm font-medium">FREE 7-DAY SELF-REFLECTION GUIDE</span>
+              <div className="inline-flex items-center gap-2 bg-[#e8deff]/50 px-4 py-2 rounded-full mb-6 border border-[#34285a]/10">
+                <Sparkles className="w-4 h-4 text-[#873da6]" />
+                <span className="text-[#34285a] text-sm font-medium">FREE 7-DAY SELF-REFLECTION GUIDE</span>
               </div>
 
               {/* Main Heading */}
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-violet-900 mb-4 leading-tight tracking-tight font-['Playfair_Display']">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#34285a] mb-4 leading-tight tracking-tight font-['Playfair_Display']">
                 7 Days to
-                <span className="block bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-[#faa21b] via-[#ffb961] to-[#faa21b] bg-clip-text text-transparent">
                   Clarity
                 </span>
               </h1>
 
               {/* Supporting Headline */}
-              <p className="text-xl md:text-2xl text-violet-900 max-w-xl mb-5 font-bold leading-tight">
+              <p className="text-xl md:text-2xl text-[#34285a] max-w-xl mb-5 font-bold leading-tight">
                 Pause the noise. Understand your patterns. Reset your direction.
               </p>
 
               {/* Body Copy */}
-              <p className="text-lg text-violet-800/80 max-w-md mb-8 leading-relaxed">
+              <p className="text-lg text-[#48454f] max-w-md mb-8 leading-relaxed">
                 A guided self-reflection journey designed to help you slow down, recognize what keeps repeating, process what you are feeling and move forward with greater clarity—one simple exercise at a time.
               </p>
 
               {/* Form */}
               <div className="max-w-md mx-auto lg:mx-0 mb-8">
-                <div className="bg-gradient-to-br from-violet-100/50 to-purple-100/50 backdrop-blur-sm p-6 rounded-2xl border border-violet-200/50 shadow-xl">
-                  <p className="text-violet-900 text-sm font-semibold mb-4">Where should we send your free guide?</p>
+                <div className="glass-card p-6 rounded-2xl border border-[#34285a]/10 shadow-xl">
+                  <p className="text-[#34285a] text-sm font-semibold mb-4">Where should we send your free guide?</p>
                   {!isSubmitted ? (
                     <form onSubmit={handleSubmit} className="w-full">
-                      <div className="space-y-3">
-                        <div>
-                          <label htmlFor="name-hero" className="sr-only">Your name</label>
-                          <input
-                            id="name-hero"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Your name"
-                            required
-                            className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
-                          />
-                        </div>
+                      <div className="space-y-4">
                         <div>
                           <label htmlFor="email-hero" className="sr-only">Email address</label>
                           <input
@@ -198,16 +185,16 @@ export default function Home() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Your email"
+                            placeholder="you@example.com"
                             required
-                            className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
+                            className="w-full px-5 py-4 rounded-xl bg-white/50 border-b-2 border-[#34285a]/20 focus:border-[#873da6] focus:bg-white/70 transition-all outline-none text-[#34285a] placeholder-[#48454f]/50"
                           />
                         </div>
 
                         <button
                           type="submit"
-                          disabled={isSubmitting || !name || !email}
-                          className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 disabled:from-violet-300 disabled:to-purple-300 text-white disabled:text-violet-500 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px] mt-2"
+                          disabled={isSubmitting || !email}
+                          className="w-full bg-gradient-to-r from-[#34285a] via-[#873da6] to-[#faa21b] hover:from-[#4b3f72] hover:via-[#9d4eb8] hover:to-[#ffb547] disabled:from-[#e8e0d0] disabled:via-[#f0e8d8] disabled:to-[#e8e0d0] text-white disabled:text-[#34285a] font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
                         >
                           {isSubmitting ? (
                             <>
@@ -225,18 +212,18 @@ export default function Home() {
                           )}
                         </button>
 
-                        <p className="text-violet-600/60 text-xs text-center">
+                        <p className="text-[#48454f]/60 text-xs text-center">
                           Instant access. No spam. Unsubscribe anytime.
                         </p>
                       </div>
                     </form>
                   ) : (
                     <div className="text-center py-6">
-                      <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
+                      <div className="w-14 h-14 bg-gradient-to-br from-[#873da6] to-[#faa21b] rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <Check className="w-7 h-7 text-white" />
                       </div>
-                      <h3 className="text-lg font-bold text-violet-900 mb-1">You&apos;re In!</h3>
-                      <p className="text-violet-700 text-sm">
+                      <h3 className="text-lg font-bold text-[#34285a] mb-1">You&apos;re In!</h3>
+                      <p className="text-[#48454f] text-sm">
                         Check your inbox for your free guide.
                       </p>
                     </div>
@@ -248,7 +235,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <button
                   onClick={scrollToWhatsInside}
-                  className="text-violet-700 hover:text-violet-900 font-semibold flex items-center gap-2 transition-colors duration-200 cursor-pointer"
+                  className="text-[#48454f] hover:text-[#34285a] font-semibold flex items-center gap-2 transition-colors duration-200 cursor-pointer"
                 >
                   See What&apos;s Inside
                   <ArrowRight className="w-4 h-4" />
@@ -256,7 +243,7 @@ export default function Home() {
               </div>
 
               {/* Value Strip */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8 text-violet-700/80 text-sm">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8 text-[#48454f] text-sm">
                 <span className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
                   7 guided exercises
@@ -286,24 +273,24 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-6">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 bg-violet-100 px-4 py-2 rounded-full mb-6">
-            <span className="text-violet-700 text-sm font-semibold tracking-wide">WHEN PUSHING HARDER ISN&apos;T WORKING</span>
+          <div className="inline-flex items-center gap-2 bg-[#e8deff] px-4 py-2 rounded-full mb-6 border border-[#873da6]/20">
+            <span className="text-[#34285a] text-sm font-semibold tracking-wide">WHEN PUSHING HARDER ISN&apos;T WORKING</span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-violet-900 mb-6 leading-tight font-['Playfair_Display']">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#34285a] mb-6 leading-tight font-['Playfair_Display']">
             You may not need more motivation. You may need space to hear yourself.
           </h2>
 
           {/* Body Copy */}
-          <div className="space-y-4 text-lg text-violet-800/80 leading-relaxed mb-8">
+          <div className="space-y-4 text-lg text-[#48454f] leading-relaxed mb-8">
             <p>
               You are ambitious. You care about growing, improving and making meaningful progress.
             </p>
             <p>
               But when your mind is carrying too many decisions, emotions, expectations and unfinished thoughts, even simple choices can begin to feel heavy.
             </p>
-            <p className="font-medium text-violet-900">
+            <p className="font-medium text-[#34285a]">
               You stay busy, but you do not feel clear.
             </p>
             <p>
@@ -312,9 +299,9 @@ export default function Home() {
           </div>
 
           {/* Closing Statement */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-100 to-purple-100 px-6 py-4 rounded-2xl border border-violet-200/50">
-            <Brain className="w-6 h-6 text-violet-600" />
-            <p className="text-violet-900 font-semibold">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#e8deff] to-[#de8ffd]/50 px-6 py-4 rounded-2xl border border-[#873da6]/20">
+            <Brain className="w-6 h-6 text-[#873da6]" />
+            <p className="text-[#34285a] font-semibold">
               7 Days to Clarity gives you a simple structure for doing exactly that.
             </p>
           </div>
@@ -373,14 +360,14 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6">
           {/* Eyebrow */}
           <div className="text-center mb-4">
-            <span className="inline-flex items-center gap-2 bg-violet-100 px-4 py-2 rounded-full text-violet-700 text-sm font-semibold tracking-wide">
+            <span className="inline-flex items-center gap-2 bg-[#e8deff] px-4 py-2 rounded-full text-[#34285a] text-sm font-semibold tracking-wide border border-[#873da6]/20">
               SIMPLE, GUIDED AND PRACTICAL
             </span>
           </div>
 
           {/* Heading */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-violet-900 mb-4 font-['Playfair_Display']">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#34285a] mb-4 font-['Playfair_Display']">
               Everything you need to begin—without overwhelming yourself
             </h2>
           </div>
@@ -408,13 +395,13 @@ export default function Home() {
                 description: "Designed to fit into a busy schedule without becoming another demanding commitment."
               }
             ].map((item, i) => (
-              <div key={i} className="flex gap-4 p-6 rounded-2xl bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center shadow-md">
+              <div key={i} className="flex gap-4 p-6 rounded-2xl bg-gradient-to-br from-[#e8deff] to-[#de8ffd]/30 border border-[#873da6]/20">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[#873da6] to-[#661a86] flex items-center justify-center shadow-md">
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-violet-900 mb-2">{item.title}</h3>
-                  <p className="text-violet-700/80 leading-relaxed">{item.description}</p>
+                  <h3 className="text-lg font-bold text-[#34285a] mb-2">{item.title}</h3>
+                  <p className="text-[#48454f] leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -422,7 +409,7 @@ export default function Home() {
 
           {/* Supporting Statement */}
           <div className="text-center">
-            <p className="text-violet-800/90 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[#48454f] text-lg max-w-2xl mx-auto leading-relaxed">
               You do not need to have everything figured out before you begin. The guide will help you work through it one day at a time.
             </p>
           </div>
@@ -430,10 +417,10 @@ export default function Home() {
       </section>
 
       {/* 7-Day Guide Preview Section */}
-      <section id="whats-inside" className="py-24 bg-gradient-to-br from-violet-600 via-purple-700 to-amber-600 relative overflow-hidden">
-        {/* Subtle decoration */}
+      <section id="whats-inside" className="py-24 bg-gradient-to-br from-[#34285a] via-[#873da6] to-[#faa21b] relative overflow-hidden">
+        {/* V2 Arched decoration */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full opacity-5 border-[1px] border-white rounded-full [clip-path:ellipse(50%_100%_at_50%_100%)]"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full opacity-10 border-[1px] border-white rounded-full [clip-path:ellipse(50%_100%_at_50%_100%)]"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
@@ -510,10 +497,10 @@ export default function Home() {
               ].map((item, i) => (
                 <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
                   <div className="flex flex-col h-full bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:border-white/30 transition-all duration-300">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-400 flex items-center justify-center font-bold text-white text-lg shadow-lg mb-4">
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-[#faa21b] to-[#ffb961] flex items-center justify-center font-bold text-white text-lg shadow-lg mb-4">
                       {i + 1}
                     </div>
-                    <div className="text-amber-300 font-semibold text-sm mb-1">{item.day}</div>
+                    <div className="text-[#ffb961] font-semibold text-sm mb-1">{item.day}</div>
                     <h4 className="text-xl font-bold text-white mb-2">{item.name}</h4>
                     <p className="text-white/90 text-sm leading-relaxed mb-4">{item.title}</p>
                     <p className="text-white/70 leading-relaxed text-sm flex-grow">{item.desc}</p>
@@ -532,8 +519,8 @@ export default function Home() {
 
           {/* Inclusion Badge */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-3 bg-amber-400/20 backdrop-blur-sm px-6 py-3 rounded-full border border-amber-400/30">
-              <Award className="w-5 h-5 text-amber-300" />
+            <div className="inline-flex items-center gap-3 bg-[#ffb961]/20 backdrop-blur-sm px-6 py-3 rounded-full border border-[#ffb961]/30">
+              <Award className="w-5 h-5 text-[#ffb961]" />
               <span className="text-white font-medium">Includes printable worksheets, reflection questions and one practical action for every day</span>
             </div>
           </div>
@@ -542,7 +529,7 @@ export default function Home() {
           <div className="text-center">
             <button
               onClick={scrollToForm}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300 text-violet-900 font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-xl cursor-pointer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ffb961] via-[#ffc975] to-[#ffb961] hover:from-[#ffc975] hover:via-[#ffd88a] hover:to-[#ffc975] text-[#34285a] font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-xl cursor-pointer"
             >
               Start My 7-Day Clarity Reset
               <ArrowRight className="w-5 h-5" />
@@ -552,11 +539,11 @@ export default function Home() {
       </section>
 
       {/* Recognition / This Is For You Section */}
-      <section className="py-24 bg-gradient-to-br from-violet-50 via-purple-50 to-amber-50">
+      <section className="py-24 bg-[#f5f3ef]">
         <div className="max-w-3xl mx-auto px-6">
           {/* Heading */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-violet-900 mb-4 font-['Playfair_Display']">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#34285a] mb-4 font-['Playfair_Display']">
               This guide is for you if…
             </h2>
           </div>
@@ -572,18 +559,18 @@ export default function Home() {
               "You sense that you are changing, but cannot yet explain what is changing.",
               "You want meaningful self-reflection without complicated theory or empty motivational advice."
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-4 p-5 rounded-xl bg-white hover:bg-violet-50 transition-colors border border-violet-100">
-                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center">
+              <div key={i} className="flex items-start gap-4 p-5 rounded-xl bg-white hover:bg-[#e8deff] transition-colors border border-[#34285a]/10">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#873da6] flex items-center justify-center">
                   <Check className="w-4 h-4 text-white" />
                 </div>
-                <p className="text-violet-800 leading-relaxed">{item}</p>
+                <p className="text-[#48454f] leading-relaxed">{item}</p>
               </div>
             ))}
           </div>
 
           {/* Closing Statement */}
-          <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-violet-100 to-purple-100 border border-violet-200/50">
-            <p className="text-violet-900 text-lg leading-relaxed">
+          <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-[#e8deff] to-[#de8ffd]/30 border border-[#873da6]/20">
+            <p className="text-[#34285a] text-lg leading-relaxed">
               You do not need to solve your entire life in seven days. You only need enough space to see your next step more clearly.
             </p>
           </div>
@@ -595,7 +582,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto px-6">
           {/* Heading */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-violet-900 mb-4 font-['Playfair_Display']">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#34285a] mb-4 font-['Playfair_Display']">
               Frequently Asked Questions
             </h2>
           </div>
@@ -627,9 +614,9 @@ export default function Home() {
                 a: "Yes. The guide is free. There are no hidden charges."
               }
             ].map((faq, i) => (
-              <div key={i} className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-6 border border-violet-100">
-                <h3 className="font-bold text-violet-900 mb-2">{faq.q}</h3>
-                <p className="text-violet-700/80">{faq.a}</p>
+              <div key={i} className="bg-gradient-to-br from-[#f5f3ef] to-[#e8deff]/30 rounded-xl p-6 border border-[#34285a]/10">
+                <h3 className="font-bold text-[#34285a] mb-2">{faq.q}</h3>
+                <p className="text-[#48454f]">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -637,16 +624,16 @@ export default function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section id="final-cta" className="py-24 bg-gradient-to-br from-violet-700 via-purple-800 to-amber-900 relative overflow-hidden">
-        {/* Subtle decoration */}
+      <section id="final-cta" className="py-24 bg-gradient-to-br from-[#34285a] via-[#873da6] to-[#faa21b] relative overflow-hidden">
+        {/* V2 Arched decoration */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full opacity-5 border-[1px] border-white rounded-full [clip-path:ellipse(50%_100%_at_50%_100%)]"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full opacity-10 border-[1px] border-white rounded-full [clip-path:ellipse(50%_100%_at_50%_100%)]"></div>
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-8 border border-white/20">
-            <Sparkles className="w-4 h-4 text-amber-300" />
+            <Sparkles className="w-4 h-4 text-[#ffb961]" />
             <span className="text-white/90 text-sm font-semibold">YOUR RESET CAN BEGIN TODAY</span>
           </div>
 
@@ -663,23 +650,11 @@ export default function Home() {
 
           {/* Form */}
           <div className="max-w-md mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20 shadow-2xl">
+            <div className="glass-card p-8 rounded-3xl border border-white/20 shadow-2xl">
               <p className="text-white/90 text-sm font-semibold mb-4">Where should we send your free guide?</p>
               {!isSubmitted ? (
                 <form onSubmit={handleSubmit} className="w-full">
-                  <div className="space-y-3">
-                    <div>
-                      <label htmlFor="name-final" className="sr-only">Your name</label>
-                      <input
-                        id="name-final"
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Your name"
-                        required
-                        className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
+                  <div className="space-y-4">
                     <div>
                       <label htmlFor="email-final" className="sr-only">Email address</label>
                       <input
@@ -687,16 +662,16 @@ export default function Home() {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Your email"
+                        placeholder="you@example.com"
                         required
-                        className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
+                        className="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#ffb961] focus:border-transparent transition-all duration-200"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      disabled={isSubmitting || !name || !email}
-                      className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300 disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-violet-900 disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px] mt-2"
+                      disabled={isSubmitting || !email}
+                      className="w-full bg-gradient-to-r from-[#ffb961] via-[#ffc975] to-[#ffb961] hover:from-[#ffc975] hover:via-[#ffd88a] hover:to-[#ffc975] disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-[#34285a] disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px]"
                     >
                       {isSubmitting ? (
                         <>
@@ -721,7 +696,7 @@ export default function Home() {
                 </form>
               ) : (
                 <div className="text-center py-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <div className="w-14 h-14 bg-gradient-to-br from-[#873da6] to-[#faa21b] rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
                     <Check className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-lg font-bold text-white mb-1">You&apos;re In!</h3>
@@ -736,13 +711,13 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 bg-gradient-to-br from-violet-900 via-purple-900 to-amber-950">
+      <footer className="py-16 bg-[#f5f3ef]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
             {/* Brand */}
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-black text-white mb-2 leading-tight tracking-wide">Amaze Motivation</h3>
-              <p className="text-purple-200/80 font-medium">Reflect. Understand. Grow.</p>
+              <h3 className="text-2xl font-black text-[#34285a] mb-2 leading-tight tracking-wide">Amaze Motivation</h3>
+              <p className="text-[#48454f] font-medium">Reflect. Understand. Grow.</p>
             </div>
 
             {/* Social Links */}
@@ -751,43 +726,43 @@ export default function Home() {
                 href="https://www.youtube.com/@AmazeMotivation4u"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 bg-white/10 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
+                className="w-12 h-12 bg-[#34285a]/10 hover:bg-red-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
                 aria-label="YouTube"
               >
-                <Youtube className="w-5 h-5 text-white" />
+                <Youtube className="w-5 h-5 text-[#34285a] group-hover:text-white" />
               </a>
               <a
                 href="https://www.facebook.com/profile.php?id=61554270534544"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 bg-white/10 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
+                className="w-12 h-12 bg-[#34285a]/10 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
                 aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5 text-white" />
+                <Facebook className="w-5 h-5 text-[#34285a] group-hover:text-white" />
               </a>
               <a
                 href="https://www.instagram.com/amaze_motivation/reels/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 bg-white/10 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
+                className="w-12 h-12 bg-[#34285a]/10 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 rounded-full flex items-center justify-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-110"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5 text-white" />
+                <Instagram className="w-5 h-5 text-[#34285a] group-hover:text-white" />
               </a>
             </div>
           </div>
 
           {/* Footer Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 mb-8 text-sm">
-            <a href="#" className="text-purple-200/80 hover:text-white transition-colors">Privacy Policy</a>
-            <span className="text-purple-200/40">|</span>
-            <a href="#" className="text-purple-200/80 hover:text-white transition-colors">Terms of Use</a>
-            <span className="text-purple-200/40">|</span>
-            <a href="#" className="text-purple-200/80 hover:text-white transition-colors">Contact</a>
+            <a href="#" className="text-[#48454f]/80 hover:text-[#34285a] transition-colors">Privacy Policy</a>
+            <span className="text-[#48454f]/40">|</span>
+            <a href="#" className="text-[#48454f]/80 hover:text-[#34285a] transition-colors">Terms of Use</a>
+            <span className="text-[#48454f]/40">|</span>
+            <a href="#" className="text-[#48454f]/80 hover:text-[#34285a] transition-colors">Contact</a>
           </div>
 
           {/* Copyright */}
-          <div className="text-center text-purple-200/60 text-sm">
+          <div className="text-center text-[#48454f]/60 text-sm">
             <p>© 2026 Amaze Motivation. All rights reserved.</p>
           </div>
         </div>

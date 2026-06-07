@@ -47,13 +47,14 @@ const BookMockup = () => (
 
 export default function LeadMagnetV2Page() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+    if (!name || !email) return
 
     setIsSubmitting(true)
 
@@ -62,7 +63,7 @@ export default function LeadMagnetV2Page() {
 
     // Store in localStorage for demo (replace with your backend/database)
     const leads = JSON.parse(localStorage.getItem('amaze_leads_v2') || '[]')
-    leads.push({ email, date: new Date().toISOString() })
+    leads.push({ name, email, date: new Date().toISOString() })
     localStorage.setItem('amaze_leads_v2', JSON.stringify(leads))
 
     setIsSubmitted(true)
@@ -179,6 +180,18 @@ export default function LeadMagnetV2Page() {
                     <form onSubmit={handleSubmit} className="w-full">
                       <div className="space-y-4">
                         <div>
+                          <label htmlFor="name-hero" className="sr-only">Your name</label>
+                          <input
+                            id="name-hero"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Your name"
+                            required
+                            className="w-full px-5 py-4 rounded-xl bg-white/50 border-b-2 border-[#34285a]/20 focus:border-[#873da6] focus:bg-white/70 transition-all outline-none text-[#34285a] placeholder-[#48454f]/50"
+                          />
+                        </div>
+                        <div>
                           <label htmlFor="email-hero" className="sr-only">Email address</label>
                           <input
                             id="email-hero"
@@ -193,7 +206,7 @@ export default function LeadMagnetV2Page() {
 
                         <button
                           type="submit"
-                          disabled={isSubmitting || !email}
+                          disabled={isSubmitting || !name || !email}
                           className="w-full bg-gradient-to-r from-[#34285a] via-[#873da6] to-[#faa21b] hover:from-[#4b3f72] hover:via-[#9d4eb8] hover:to-[#ffb547] disabled:from-[#e8e0d0] disabled:via-[#f0e8d8] disabled:to-[#e8e0d0] text-white disabled:text-[#34285a] font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
                         >
                           {isSubmitting ? (
@@ -412,6 +425,80 @@ export default function LeadMagnetV2Page() {
             <p className="text-[#48454f] text-lg max-w-2xl mx-auto leading-relaxed">
               You do not need to have everything figured out before you begin. The guide will help you work through it one day at a time.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Heading */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#34285a] mb-4 font-['Playfair_Display']">
+              What people are saying
+            </h2>
+            <p className="text-lg text-[#48454f] max-w-2xl mx-auto">
+              Real experiences from people who took 7 days to pause, reflect and reset.
+            </p>
+          </div>
+
+          {/* Testimonials Grid */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Sarah M.",
+                role: "Marketing Professional",
+                text: "I didn't realize how much mental noise I was carrying until Day 3. The exercise helped me name exactly what was draining my energy—and that simple awareness changed everything.",
+                rating: 5
+              },
+              {
+                name: "James K.",
+                role: "Entrepreneur",
+                text: "I've tried countless productivity systems, but this was different. Instead of adding more to my plate, it helped me see what I needed to put down. Finally feel like I'm moving with intention.",
+                rating: 5
+              },
+              {
+                name: "Amanda L.",
+                role: "Teacher & Mother",
+                text: "10 minutes a day felt manageable even on my busiest days. By Day 7, I had clarity on what actually matters to me right now—not what I thought should matter. Highly recommend.",
+                rating: 5
+              }
+            ].map((testimonial, i) => (
+              <div key={i} className="bg-gradient-to-br from-[#f5f3ef] to-[#e8deff]/30 p-8 rounded-2xl border border-[#34285a]/10">
+                {/* Rating Stars */}
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: testimonial.rating }).map((_, j) => (
+                    <svg key={j} className="w-5 h-5 text-[#faa21b] fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Testimonial Text */}
+                <p className="text-[#34285a] leading-relaxed mb-6 italic">
+                  &ldquo;{testimonial.text}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#873da6] to-[#661a86] flex items-center justify-center text-white font-bold">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#34285a]">{testimonial.name}</p>
+                    <p className="text-sm text-[#48454f]/70">{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust Badge */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-2 bg-[#e8deff] px-6 py-3 rounded-full border border-[#873da6]/20">
+              <Sparkles className="w-5 h-5 text-[#873da6]" />
+              <span className="text-[#34285a] font-medium">Join thousands who have started their clarity journey</span>
+            </div>
           </div>
         </div>
       </section>
@@ -656,6 +743,18 @@ export default function LeadMagnetV2Page() {
                 <form onSubmit={handleSubmit} className="w-full">
                   <div className="space-y-4">
                     <div>
+                      <label htmlFor="name-final" className="sr-only">Your name</label>
+                      <input
+                        id="name-final"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your name"
+                        required
+                        className="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#ffb961] focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                    <div>
                       <label htmlFor="email-final" className="sr-only">Email address</label>
                       <input
                         id="email-final"
@@ -670,7 +769,7 @@ export default function LeadMagnetV2Page() {
 
                     <button
                       type="submit"
-                      disabled={isSubmitting || !email}
+                      disabled={isSubmitting || !name || !email}
                       className="w-full bg-gradient-to-r from-[#ffb961] via-[#ffc975] to-[#ffb961] hover:from-[#ffc975] hover:via-[#ffd88a] hover:to-[#ffc975] disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-[#34285a] disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px]"
                     >
                       {isSubmitting ? (

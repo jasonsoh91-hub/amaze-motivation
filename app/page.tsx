@@ -109,7 +109,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-violet-900 tracking-tight">Amaze Motivation</h1>
+              <img src="/logo.png" alt="Amaze Motivation" className="h-10 w-auto" />
             </div>
 
             {/* Desktop Nav */}
@@ -800,8 +800,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
             {/* Brand */}
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-black text-white mb-2 leading-tight tracking-wide">Amaze Motivation</h3>
+            <div className="text-center md:text-left flex items-center gap-4">
+              <img src="/logo.png" alt="Amaze Motivation" className="h-12 w-auto" />
               <p className="text-purple-200/80 font-medium">Reflect. Understand. Grow.</p>
             </div>
 

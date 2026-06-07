@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Check, ArrowRight, Sparkles, BookOpen, Award, Menu, X, Brain, Wind, RefreshCw } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNavigation, CarouselIndicator } from '@/components/ui/carousel'
+import { CircularTestimonials } from '@/components/ui/circular-testimonials'
 
 // Custom social media icons
 const Facebook = ({ className }: { className?: string }) => (
@@ -451,7 +452,7 @@ export default function LeadMagnetV2Page() {
 
       {/* Testimonials Section */}
       <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-4xl mx-auto px-6">
           {/* Heading */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#34285a] mb-4 font-['Playfair_Display']">
@@ -462,59 +463,46 @@ export default function LeadMagnetV2Page() {
             </p>
           </div>
 
-          {/* Testimonials Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
+          {/* Circular Testimonials */}
+          <CircularTestimonials
+            testimonials={[
               {
                 name: "Sarah M.",
-                role: "Marketing Professional",
-                text: "I didn't realize how much mental noise I was carrying until Day 3. The exercise helped me name exactly what was draining my energy—and that simple awareness changed everything.",
-                rating: 5
+                designation: "Marketing Professional",
+                quote: "I didn&apos;t realize how much mental noise I was carrying until Day 3. The exercise helped me name exactly what was draining my energy—and that simple awareness changed everything.",
+                src: "https://ui-avatars.com/api/?name=Sarah+M&background=873DA6&color=fff&size=400"
               },
               {
                 name: "James K.",
-                role: "Entrepreneur",
-                text: "I've tried countless productivity systems, but this was different. Instead of adding more to my plate, it helped me see what I needed to put down. Finally feel like I'm moving with intention.",
-                rating: 5
+                designation: "Entrepreneur",
+                quote: "I&apos;ve tried countless productivity systems, but this was different. Instead of adding more to my plate, it helped me see what I needed to put down. Finally feel like I&apos;m moving with intention.",
+                src: "https://ui-avatars.com/api/?name=James+K&background=FAA21B&color=fff&size=400"
               },
               {
                 name: "Amanda L.",
-                role: "Teacher & Mother",
-                text: "10 minutes a day felt manageable even on my busiest days. By Day 7, I had clarity on what actually matters to me right now—not what I thought should matter. Highly recommend.",
-                rating: 5
+                designation: "Teacher & Mother",
+                quote: "10 minutes a day felt manageable even on my busiest days. By Day 7, I had clarity on what actually matters to me right now—not what I thought should matter. Highly recommend.",
+                src: "https://ui-avatars.com/api/?name=Amanda+L&background=873DA6&color=fff&size=400"
               }
-            ].map((testimonial, i) => (
-              <div key={i} className="bg-gradient-to-br from-[#f5f3ef] to-[#e8deff]/30 p-8 rounded-2xl border border-[#34285a]/10">
-                {/* Rating Stars */}
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: testimonial.rating }).map((_, j) => (
-                    <svg key={j} className="w-5 h-5 text-[#faa21b] fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-[#34285a] leading-relaxed mb-6 italic">
-                  &ldquo;{testimonial.text}&rdquo;
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#873da6] to-[#661a86] flex items-center justify-center text-white font-bold">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-[#34285a]">{testimonial.name}</p>
-                    <p className="text-sm text-[#48454f]/70">{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+            ]}
+            colors={{
+              name: "#34285a",
+              designation: "#873da6",
+              testimony: "#48454f",
+              arrowBackground: "#873da6",
+              arrowForeground: "#FFFFFF",
+              arrowHoverBackground: "#FAA21B"
+            }}
+            fontSizes={{
+              name: "1.5rem",
+              designation: "0.95rem",
+              quote: "1.1rem"
+            }}
+            autoplay={true}
+          />
 
           {/* Trust Badge */}
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <div className="inline-flex items-center gap-2 bg-[#e8deff] px-6 py-3 rounded-full border border-[#873da6]/20">
               <Sparkles className="w-5 h-5 text-[#873da6]" />
               <span className="text-[#34285a] font-medium">Join thousands who have started their clarity journey</span>

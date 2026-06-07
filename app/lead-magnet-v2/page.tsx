@@ -58,15 +58,35 @@ export default function LeadMagnetV2Page() {
 
     setIsSubmitting(true)
 
-    // Simulate API call - replace with your actual endpoint
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch('/api/submit-lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email }),
+      })
 
-    // Store in localStorage for demo (replace with your backend/database)
-    const leads = JSON.parse(localStorage.getItem('amaze_leads_v2') || '[]')
-    leads.push({ name, email, date: new Date().toISOString() })
-    localStorage.setItem('amaze_leads_v2', JSON.stringify(leads))
+      const data = await response.json()
 
-    setIsSubmitted(true)
+      if (!response.ok) {
+        console.error('Submission error:', data)
+        // Fall back to localStorage on error
+        const leads = JSON.parse(localStorage.getItem('amaze_leads_v2') || '[]')
+        leads.push({ name, email, date: new Date().toISOString() })
+        localStorage.setItem('amaze_leads_v2', JSON.stringify(leads))
+      }
+
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error('Submission error:', error)
+      // Fall back to localStorage on error
+      const leads = JSON.parse(localStorage.getItem('amaze_leads_v2') || '[]')
+      leads.push({ name, email, date: new Date().toISOString() })
+      localStorage.setItem('amaze_leads_v2', JSON.stringify(leads))
+      setIsSubmitted(true)
+    }
+
     setIsSubmitting(false)
   }
 

@@ -470,19 +470,19 @@ export default function Home() {
                 name: "Sarah M.",
                 designation: "Marketing Professional",
                 quote: "I didn&apos;t realize how much mental noise I was carrying until Day 3. The exercise helped me name exactly what was draining my energy—and that simple awareness changed everything.",
-                src: "https://ui-avatars.com/api/?name=Sarah+M&background=8B5CF6&color=fff&size=400"
+                src: "/testimonials/sarah.jpg"
               },
               {
                 name: "James K.",
                 designation: "Entrepreneur",
                 quote: "I&apos;ve tried countless productivity systems, but this was different. Instead of adding more to my plate, it helped me see what I needed to put down. Finally feel like I&apos;m moving with intention.",
-                src: "https://ui-avatars.com/api/?name=James+K&background=F59E0B&color=fff&size=400"
+                src: "/testimonials/james.jpg"
               },
               {
                 name: "Amanda L.",
                 designation: "Teacher & Mother",
                 quote: "10 minutes a day felt manageable even on my busiest days. By Day 7, I had clarity on what actually matters to me right now—not what I thought should matter. Highly recommend.",
-                src: "https://ui-avatars.com/api/?name=Amanda+L&background=8B5CF6&color=fff&size=400"
+                src: "/testimonials/amanda.jpg"
               }
             ]}
             colors={{

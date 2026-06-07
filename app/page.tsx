@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Check, ArrowRight, Sparkles, BookOpen, Award, Menu, X, Brain, Wind, RefreshCw } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNavigation, CarouselIndicator } from '@/components/ui/carousel'
 import { CircularTestimonials } from '@/components/ui/circular-testimonials'
@@ -47,10 +48,10 @@ const BookMockup = () => (
 )
 
 export default function Home() {
+  const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,14 +79,15 @@ export default function Home() {
         localStorage.setItem('amaze_leads', JSON.stringify(leads))
       }
 
-      setIsSubmitted(true)
+      // Redirect to thank you page
+      router.push('/thank-you')
     } catch (error) {
       console.error('Submission error:', error)
       // Fall back to localStorage on error
       const leads = JSON.parse(localStorage.getItem('amaze_leads') || '[]')
       leads.push({ name, email, date: new Date().toISOString() })
       localStorage.setItem('amaze_leads', JSON.stringify(leads))
-      setIsSubmitted(true)
+      router.push('/thank-you')
     }
 
     setIsSubmitting(false)
@@ -197,71 +199,59 @@ export default function Home() {
               <div className="max-w-md mx-auto lg:mx-0 mb-8">
                 <div className="bg-gradient-to-br from-violet-100/50 to-purple-100/50 backdrop-blur-sm p-6 rounded-2xl border border-violet-200/50 shadow-xl">
                   <p className="text-violet-900 text-sm font-semibold mb-4">Where should we send your free guide?</p>
-                  {!isSubmitted ? (
-                    <form onSubmit={handleSubmit} className="w-full">
-                      <div className="space-y-3">
-                        <div>
-                          <label htmlFor="name-hero" className="sr-only">Your name</label>
-                          <input
-                            id="name-hero"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Your name"
-                            required
-                            className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="email-hero" className="sr-only">Email address</label>
-                          <input
-                            id="email-hero"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Your email"
-                            required
-                            className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
-                          />
-                        </div>
-
-                        <button
-                          type="submit"
-                          disabled={isSubmitting || !name || !email}
-                          className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 disabled:from-violet-300 disabled:to-purple-300 text-white disabled:text-violet-500 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px] mt-2"
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                              </svg>
-                              Processing...
-                            </>
-                          ) : (
-                            <>
-                              Send Me the Free Guide
-                              <ArrowRight className="w-5 h-5" />
-                            </>
-                          )}
-                        </button>
-
-                        <p className="text-violet-600/60 text-xs text-center">
-                          Instant access. No spam. Unsubscribe anytime.
-                        </p>
+                  <form onSubmit={handleSubmit} className="w-full">
+                    <div className="space-y-3">
+                      <div>
+                        <label htmlFor="name-hero" className="sr-only">Your name</label>
+                        <input
+                          id="name-hero"
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Your name"
+                          required
+                          className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
+                        />
                       </div>
-                    </form>
-                  ) : (
-                    <div className="text-center py-6">
-                      <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <Check className="w-7 h-7 text-white" />
+                      <div>
+                        <label htmlFor="email-hero" className="sr-only">Email address</label>
+                        <input
+                          id="email-hero"
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Your email"
+                          required
+                          className="w-full px-5 py-3 rounded-xl bg-white/50 border-b-2 border-violet-200 focus:border-violet-500 focus:bg-white/70 transition-all outline-none text-violet-900 placeholder-violet-400"
+                        />
                       </div>
-                      <h3 className="text-lg font-bold text-violet-900 mb-1">You&apos;re In!</h3>
-                      <p className="text-violet-700 text-sm">
-                        Check your inbox for your free guide.
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || !name || !email}
+                        className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 disabled:from-violet-300 disabled:to-purple-300 text-white disabled:text-violet-500 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px] mt-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            Send Me the Free Guide
+                            <ArrowRight className="w-5 h-5" />
+                          </>
+                        )}
+                      </button>
+
+                      <p className="text-violet-600/60 text-xs text-center">
+                        Instant access. No spam. Unsubscribe anytime.
                       </p>
                     </div>
-                  )}
+                  </form>
                 </div>
               </div>
 
@@ -467,21 +457,21 @@ export default function Home() {
           <CircularTestimonials
             testimonials={[
               {
-                name: "Sarah M.",
-                designation: "Marketing Professional",
-                quote: "I didn&apos;t realize how much mental noise I was carrying until Day 3. The exercise helped me name exactly what was draining my energy—and that simple awareness changed everything.",
+                name: "Sarah Mitchell",
+                designation: "Marketing Manager",
+                quote: "Honestly, I was skeptical. Another self-help thing? But Day 2 hit different—I realized I&apos;ve been reacting to everything instead of choosing anything. The questions made me actually think, which rarely happens anymore. I&apos;m still not &apos;fixed&apos; or whatever, but I know what I need to focus on now.",
                 src: "/testimonials/sarah.jpg"
               },
               {
-                name: "James K.",
-                designation: "Entrepreneur",
-                quote: "I&apos;ve tried countless productivity systems, but this was different. Instead of adding more to my plate, it helped me see what I needed to put down. Finally feel like I&apos;m moving with intention.",
+                name: "James Kim",
+                designation: "Startup Founder",
+                quote: "I&apos;ve downloaded dozens of these guides. Most sit in my downloads folder. This one I actually finished. The difference? It doesn&apos;t ask you to do MORE. It asks you to stop and notice what you&apos;re already doing. That&apos;s what I needed. Simple, but not easy.",
                 src: "/testimonials/james.jpg"
               },
               {
-                name: "Amanda L.",
-                designation: "Teacher & Mother",
-                quote: "10 minutes a day felt manageable even on my busiest days. By Day 7, I had clarity on what actually matters to me right now—not what I thought should matter. Highly recommend.",
+                name: "Amanda Liu",
+                designation: "Teacher & Mom of 2",
+                quote: "Between grading papers and managing my kids&apos; schedules, my brain is constantly full. This guide gave me permission to press pause for 10 minutes a day without feeling guilty about it. By the end of the week, I could actually hear my own thoughts again. That sounds dramatic but it&apos;s true.",
                 src: "/testimonials/amanda.jpg"
               }
             ]}
@@ -747,71 +737,59 @@ export default function Home() {
           <div className="max-w-md mx-auto">
             <div className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20 shadow-2xl">
               <p className="text-white/90 text-sm font-semibold mb-4">Where should we send your free guide?</p>
-              {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="w-full">
-                  <div className="space-y-3">
-                    <div>
-                      <label htmlFor="name-final" className="sr-only">Your name</label>
-                      <input
-                        id="name-final"
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Your name"
-                        required
-                        className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email-final" className="sr-only">Email address</label>
-                      <input
-                        id="email-final"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Your email"
-                        required
-                        className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || !name || !email}
-                      className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300 disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-violet-900 disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px] mt-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                          </svg>
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          Start My 7-Day Clarity Reset
-                          <ArrowRight className="w-5 h-5" />
-                        </>
-                      )}
-                    </button>
-
-                    <p className="text-white/60 text-xs text-center">
-                      Instant access. No spam. Unsubscribe anytime.
-                    </p>
+              <form onSubmit={handleSubmit} className="w-full">
+                <div className="space-y-3">
+                  <div>
+                    <label htmlFor="name-final" className="sr-only">Your name</label>
+                    <input
+                      id="name-final"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      required
+                      className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
+                    />
                   </div>
-                </form>
-              ) : (
-                <div className="text-center py-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
-                    <Check className="w-7 h-7 text-white" />
+                  <div>
+                    <label htmlFor="email-final" className="sr-only">Email address</label>
+                    <input
+                      id="email-final"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Your email"
+                      required
+                      className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200"
+                    />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-1">You&apos;re In!</h3>
-                  <p className="text-white/90 text-sm">
-                    Check your inbox for your free guide.
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !name || !email}
+                    className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300 disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-violet-900 disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px] mt-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        Start My 7-Day Clarity Reset
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
+                  </button>
+
+                  <p className="text-white/60 text-xs text-center">
+                    Instant access. No spam. Unsubscribe anytime.
                   </p>
                 </div>
-              )}
+              </form>
             </div>
           </div>
         </div>

@@ -109,7 +109,7 @@ export default function LeadMagnetV2Page() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <img src="/logo.png" alt="Amaze Motivation" className="h-10 w-auto" />
+              <h1 className="text-xl font-bold text-[#34285a] tracking-tight">Amaze Motivation</h1>
             </div>
 
             {/* Desktop Nav */}
@@ -800,8 +800,8 @@ export default function LeadMagnetV2Page() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
             {/* Brand */}
-            <div className="text-center md:text-left flex items-center gap-4">
-              <img src="/logo.png" alt="Amaze Motivation" className="h-12 w-auto" />
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl font-black text-[#34285a] mb-2 leading-tight tracking-wide">Amaze Motivation</h3>
               <p className="text-[#48454f] font-medium">Reflect. Understand. Grow.</p>
             </div>
 

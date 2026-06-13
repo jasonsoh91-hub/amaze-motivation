@@ -12,7 +12,7 @@ export default function ThankYouPage() {
 
         {/* Heading */}
         <h1 className="text-4xl md:text-5xl font-black text-violet-900 mb-4 font-['Playfair_Display']">
-          You&apos;re In!
+          You are In!
         </h1>
 
         {/* Subheading */}
@@ -24,7 +24,7 @@ export default function ThankYouPage() {
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-violet-100 shadow-lg mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Mail className="w-6 h-6 text-violet-600" />
-            <h2 className="text-xl font-bold text-violet-900">What&apos;s Next?</h2>
+            <h2 className="text-xl font-bold text-violet-900">What is Next?</h2>
           </div>
           <ul className="text-left space-y-3 text-violet-700">
             <li className="flex items-start gap-3">
@@ -37,7 +37,7 @@ export default function ThankYouPage() {
             </li>
             <li className="flex items-start gap-3">
               <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-              <span>Start Day 1 whenever you&apos;re ready—no pressure</span>
+              <span>Start Day 1 whenever you are ready—no pressure</span>
             </li>
           </ul>
         </div>

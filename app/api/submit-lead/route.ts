@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 
     // If list ID is configured, add contact to the list
     if (AC_LIST_ID && contactId) {
-      await fetch(`${AC_API_URL}/api/3/contacts/${contactId}/contactLists`, {
+      await fetch(`${AC_API_URL}/api/3/contactLists`, {
         method: 'POST',
         headers: {
           'Api-Token': AC_API_KEY || '',
@@ -74,8 +74,8 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           contactList: {
-            contact: contactId,
             list: AC_LIST_ID,
+            contact: contactId,
             status: 1, // 1 = active, 2 = unsubscribed
           },
         }),

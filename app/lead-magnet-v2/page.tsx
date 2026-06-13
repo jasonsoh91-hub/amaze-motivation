@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { Check, ArrowRight, Sparkles, BookOpen, Award, Menu, X, Brain, Wind, RefreshCw } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNavigation, CarouselIndicator } from '@/components/ui/carousel'
 import { CircularTestimonials } from '@/components/ui/circular-testimonials'
@@ -34,10 +35,13 @@ const BookMockup = () => (
 
       {/* Main book container with 3D effect */}
       <div className="relative w-full h-full rounded-xl shadow-2xl overflow-hidden">
-        <img
+        <Image
           src="/book-cover.png"
           alt="7 Days to Clarity - Free Guide by Amaze Motivation"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 224px, 288px"
+          priority
         />
 
         {/* Shine/gloss effect overlay */}
@@ -118,7 +122,7 @@ export default function LeadMagnetV2Page() {
                 onClick={scrollToWhatsInside}
                 className="text-[#48454f] hover:text-[#34285a] font-medium transition-colors duration-200"
               >
-                What&apos;s Inside
+                What is Inside
               </button>
               <button
                 onClick={scrollToForm}
@@ -145,7 +149,7 @@ export default function LeadMagnetV2Page() {
                 onClick={() => { scrollToWhatsInside(); setMobileMenuOpen(false); }}
                 className="block w-full text-left text-[#48454f] hover:text-[#34285a] font-medium py-2"
               >
-                What&apos;s Inside
+                What is Inside
               </button>
               <button
                 onClick={() => { scrollToForm(); setMobileMenuOpen(false); }}
@@ -229,7 +233,7 @@ export default function LeadMagnetV2Page() {
                       <button
                         type="submit"
                         disabled={isSubmitting || !name || !email}
-                        className="w-full bg-gradient-to-r from-[#34285a] via-[#873da6] to-[#faa21b] hover:from-[#4b3f72] hover:via-[#9d4eb8] hover:to-[#ffb547] disabled:from-[#e8e0d0] disabled:via-[#f0e8d8] disabled:to-[#e8e0d0] text-white disabled:text-[#34285a] font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
+                        className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-amber-400 disabled:via-yellow-400 disabled:to-amber-400 text-white font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
                       >
                         {isSubmitting ? (
                           <>
@@ -261,7 +265,7 @@ export default function LeadMagnetV2Page() {
                   onClick={scrollToWhatsInside}
                   className="text-[#48454f] hover:text-[#34285a] font-semibold flex items-center gap-2 transition-colors duration-200 cursor-pointer"
                 >
-                  See What&apos;s Inside
+                  See What is Inside
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -294,41 +298,28 @@ export default function LeadMagnetV2Page() {
       </section>
 
       {/* Problem-Awareness Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 bg-[#e8deff] px-4 py-2 rounded-full mb-6 border border-[#873da6]/20">
-            <span className="text-[#34285a] text-sm font-semibold tracking-wide">WHEN PUSHING HARDER ISN&apos;T WORKING</span>
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#34285a] mb-6 leading-tight font-['Playfair_Display']">
-            You may not need more motivation. You may need space to hear yourself.
-          </h2>
-
-          {/* Body Copy */}
-          <div className="space-y-4 text-lg text-[#48454f] leading-relaxed mb-8">
-            <p>
-              You are ambitious. You care about growing, improving and making meaningful progress.
-            </p>
-            <p>
-              But when your mind is carrying too many decisions, emotions, expectations and unfinished thoughts, even simple choices can begin to feel heavy.
-            </p>
-            <p className="font-medium text-[#34285a]">
-              You stay busy, but you do not feel clear.
-            </p>
-            <p>
-              The answer is not always another productivity system or a longer to-do list. Sometimes, clarity begins by slowing down long enough to notice what is really happening beneath the noise.
-            </p>
-          </div>
-
-          {/* Closing Statement */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#e8deff] to-[#de8ffd]/50 px-6 py-4 rounded-2xl border border-[#873da6]/20">
-            <Brain className="w-6 h-6 text-[#873da6]" />
-            <p className="text-[#34285a] font-semibold">
-              7 Days to Clarity gives you a simple structure for doing exactly that.
-            </p>
-          </div>
+      <section className="py-0 relative w-full -mx-[calc(50%-50vw)] h-[500px] md:h-[600px] lg:h-[700px] bg-transparent">
+        {/* Mobile Image */}
+        <div className="md:hidden absolute inset-0 w-full bg-white">
+          <Image
+            src="/section2_mobile.png"
+            alt="When Pushing Harder Isn't Working - You may not need more motivation. You may need space to hear yourself."
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        </div>
+        {/* Desktop Image */}
+        <div className="hidden md:block absolute inset-0 w-full">
+          <Image
+            src="/section2_desktop.png"
+            alt="When Pushing Harder Isn't Working - You may not need more motivation. You may need space to hear yourself."
+            fill
+            className="object-cover object-top"
+            sizes="100vw"
+            priority
+          />
         </div>
       </section>
 
@@ -459,19 +450,19 @@ export default function LeadMagnetV2Page() {
               {
                 name: "Sarah Mitchell",
                 designation: "Marketing Manager",
-                quote: "Honestly, I was skeptical. Another self-help thing? But Day 2 hit different—I realized I&apos;ve been reacting to everything instead of choosing anything. The questions made me actually think, which rarely happens anymore. I&apos;m still not &apos;fixed&apos; or whatever, but I know what I need to focus on now.",
+                quote: "Honestly, I was skeptical. Another self-help thing? But Day 2 hit different—I realized I had been reacting to everything instead of making intentional choices. The questions forced me to think deeply, something I rarely do these days. I am still not completely fixed, but I now understand exactly where I need to focus my attention.",
                 src: "/testimonials/sarah.jpg"
               },
               {
                 name: "James Kim",
                 designation: "Startup Founder",
-                quote: "I&apos;ve downloaded dozens of these guides. Most sit in my downloads folder. This one I actually finished. The difference? It doesn&apos;t ask you to do MORE. It asks you to stop and notice what you&apos;re already doing. That&apos;s what I needed. Simple, but not easy.",
+                quote: "I have downloaded dozens of guides over the years. Most sit unused in my downloads folder. This one I actually completed. The difference? This guide does not demand you do more work. It asks you to pause and notice what you are already doing. That approach worked for me. Simple but powerful.",
                 src: "/testimonials/james.jpg"
               },
               {
                 name: "Amanda Liu",
                 designation: "Teacher & Mom of 2",
-                quote: "Between grading papers and managing my kids&apos; schedules, my brain is constantly full. This guide gave me permission to press pause for 10 minutes a day without feeling guilty about it. By the end of the week, I could actually hear my own thoughts again. That sounds dramatic but it&apos;s true.",
+                quote: "Between grading papers and managing my kids schedules, my brain is constantly full. This guide gave me permission to pause for 10 minutes each day without guilt. By the end of the week, I could actually hear my own thoughts again. That might sound dramatic, but it is true.",
                 src: "/testimonials/amanda.jpg"
               }
             ]}
@@ -535,14 +526,14 @@ export default function LeadMagnetV2Page() {
                   name: "Pause",
                   title: "Create space before taking another step.",
                   desc: "Slow down long enough to notice whether you are consciously choosing your next move—or simply reacting to everything around you.",
-                  quote: "You don't need more motivation. You need space to pause."
+                  quote: "You do not need more motivation. You need space to pause."
                 },
                 {
                   day: "Day 2",
                   name: "Patterns",
                   title: "Notice what keeps repeating.",
                   desc: "Identify the situations, roles and behaviours that continue appearing in your life, and begin understanding the lesson beneath them.",
-                  quote: "Your life doesn't repeat by accident—your patterns do."
+                  quote: "Your life does not repeat by accident—your patterns do."
                 },
                 {
                   day: "Day 3",
@@ -556,7 +547,7 @@ export default function LeadMagnetV2Page() {
                   name: "Emotions",
                   title: "Acknowledge what you have been avoiding.",
                   desc: "Recognize the emotions you may have been suppressing and create space to process them without judgment.",
-                  quote: "What you don't process can quietly control you."
+                  quote: "What you do not process can quietly control you."
                 },
                 {
                   day: "Day 5",
@@ -570,14 +561,14 @@ export default function LeadMagnetV2Page() {
                   name: "Identity",
                   title: "Recognize who you are becoming.",
                   desc: "Explore the version of yourself you may be outgrowing and the new identity that is beginning to emerge.",
-                  quote: "You're not stuck—you're evolving."
+                  quote: "You are not stuck—you are evolving."
                 },
                 {
                   day: "Day 7",
                   name: "Reset",
                   title: "Choose what you want to carry forward.",
                   desc: "Reflect on what you have learned, decide what needs to change and choose one simple habit to continue beyond the seven days.",
-                  quote: "You don't need a new life—just a reset."
+                  quote: "You do not need a new life—just a reset."
                 }
               ].map((item, i) => (
                 <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3">
@@ -767,7 +758,7 @@ export default function LeadMagnetV2Page() {
                   <button
                     type="submit"
                     disabled={isSubmitting || !name || !email}
-                    className="w-full bg-gradient-to-r from-[#ffb961] via-[#ffc975] to-[#ffb961] hover:from-[#ffc975] hover:via-[#ffd88a] hover:to-[#ffc975] disabled:from-white/30 disabled:via-white/30 disabled:to-white/30 text-[#34285a] disabled:text-white/70 font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px]"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-amber-400 disabled:via-yellow-400 disabled:to-amber-400 text-white font-bold px-6 py-4 rounded-full text-base transition-all duration-300 transform hover:scale-105 disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-xl min-h-[44px]"
                   >
                     {isSubmitting ? (
                       <>

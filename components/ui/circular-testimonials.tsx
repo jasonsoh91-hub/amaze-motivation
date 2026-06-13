@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface Testimonial {
   quote: string;
@@ -181,14 +182,20 @@ export const CircularTestimonials = ({
         {/* Images */}
         <div className="image-container" ref={imageContainerRef}>
           {testimonials.map((testimonial, index) => (
-            <img
+            <div
               key={testimonial.src}
-              src={testimonial.src}
-              alt={testimonial.name}
-              className="testimonial-image"
+              className="testimonial-image-wrapper"
               data-index={index}
               style={getImageStyle(index)}
-            />
+            >
+              <Image
+                src={testimonial.src}
+                alt={testimonial.name}
+                fill
+                className="testimonial-image"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
           ))}
         </div>
         {/* Content */}
@@ -288,13 +295,16 @@ export const CircularTestimonials = ({
           height: 24rem;
           perspective: 1000px;
         }
-        .testimonial-image {
+        .testimonial-image-wrapper {
           position: absolute;
           width: 100%;
           height: 100%;
-          object-fit: cover;
           border-radius: 1.5rem;
+          overflow: hidden;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .testimonial-image {
+          object-fit: cover;
         }
         .testimonial-content {
           display: flex;
@@ -302,14 +312,17 @@ export const CircularTestimonials = ({
           justify-content: space-between;
         }
         .name {
-          font-weight: bold;
+          font-weight: 700;
           margin-bottom: 0.25rem;
+          font-family: 'Playfair Display', serif;
         }
         .designation {
           margin-bottom: 2rem;
+          font-weight: 500;
         }
         .quote {
           line-height: 1.75;
+          font-weight: 400;
         }
         .arrow-buttons {
           display: flex;

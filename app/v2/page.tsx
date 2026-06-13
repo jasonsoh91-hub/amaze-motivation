@@ -4,7 +4,9 @@ import { motion, useScroll, useTransform, useInView, useReducedMotion, AnimatePr
 import { useRef, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { ChevronDown, XCircle, CheckCircle, Loader2, BookOpen, Award, Sparkles, ArrowRight, Check } from "lucide-react"
+import { ChevronDown, XCircle, CheckCircle, Loader2, BookOpen, Award, Sparkles, ArrowRight, Check, Star } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 // ============================================================================
 // IMAGE ASSETS
@@ -533,26 +535,56 @@ function TestimonialsSection() {
     {
       name: "Sarah Mitchell",
       role: "Marketing Manager",
-      text: "I was skeptical. Another self-help thing? But Day 2 hit different—I realized I had been reacting to everything instead of choosing intentionally. The questions forced me to think deeply.",
-      initials: "SM",
+      company: "TechCorp",
+      image: "https://i.pravatar.cc/150?img=1",
+      content: "I was skeptical. Another self-help thing? But Day 2 hit different—I realized I had been reacting to everything instead of choosing intentionally. The questions forced me to think deeply.",
+      rating: 5,
     },
     {
       name: "James Kim",
       role: "Startup Founder",
-      text: "I've downloaded dozens of guides. Most sit unused. This one I actually completed. It doesn't demand more work—it asks you to pause and notice what you're already doing. Simple but powerful.",
-      initials: "JK",
+      company: "InnovateLabs",
+      image: "https://i.pravatar.cc/150?img=2",
+      content: "I've downloaded dozens of guides. Most sit unused. This one I actually completed. It doesn't demand more work—it asks you to pause and notice what you're already doing. Simple but powerful.",
+      rating: 5,
     },
     {
       name: "Amanda Liu",
-      role: "Teacher & Mom of 2",
-      text: "Between grading and managing my kids' schedules, my brain is constantly full. This guide gave me permission to pause for 10 minutes each day without guilt. By the end of the week, I could hear my own thoughts again.",
-      initials: "AL",
+      role: "Teacher",
+      company: "CreativeStudio",
+      image: "https://i.pravatar.cc/150?img=3",
+      content: "Between grading and managing my kids' schedules, my brain is constantly full. This guide gave me permission to pause for 10 minutes each day without guilt. By the end of the week, I could hear my own thoughts again.",
+      rating: 5,
+    },
+    {
+      name: "David Kim",
+      role: "CTO",
+      company: "StartupXYZ",
+      image: "https://i.pravatar.cc/150?img=4",
+      content: "The best investment I made this year. The exercises are practical and the insights are actionable. I finally understand my patterns and can make better decisions.",
+      rating: 5,
+    },
+    {
+      name: "Lisa Anderson",
+      role: "Marketing Director",
+      company: "GrowthCo",
+      image: "https://i.pravatar.cc/150?img=5",
+      content: "Game-changer for my mental clarity. The daily exercises helped me identify what was draining my energy and what actually matters. Highly recommend.",
+      rating: 5,
+    },
+    {
+      name: "Michael Chen",
+      role: "Product Manager",
+      company: "InnovateLabs",
+      image: "https://i.pravatar.cc/150?img=6",
+      content: "Exceptional quality and insights. The structured approach to self-reflection is exactly what I needed. Our team productivity has improved significantly.",
+      rating: 5,
     },
   ]
 
   return (
     <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#1A1A2E" }}>
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -566,32 +598,72 @@ function TestimonialsSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             Real results from real people.
           </h2>
+          <p className="text-lg mt-4 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Don't just take our word for it. Here's what people have to say about their 7-day clarity journey.
+          </p>
         </motion.div>
 
         {/* Testimonials */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-6 rounded-2xl"
-              style={{ background: "rgba(139, 92, 246, 0.08)", border: "1px solid rgba(139, 92, 246, 0.15)" }}
             >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center font-bold mb-4"
-                style={{ background: "linear-gradient(135deg, #8B5CF6, #A78BFA)", color: "#FFFFFF" }}
+              <Card
+                className="h-full transition-all duration-300 hover:shadow-xl"
+                style={{
+                  background: "rgba(139, 92, 246, 0.08)",
+                  border: "1px solid rgba(139, 92, 246, 0.15)",
+                }}
               >
-                {testimonial.initials}
-              </div>
-              <p className="text-sm mb-4 leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>
-                "{testimonial.text}"
-              </p>
-              <div>
-                <p className="font-semibold text-white text-sm">{testimonial.name}</p>
-                <p className="text-xs" style={{ color: "#C4B5FD" }}>{testimonial.role}</p>
-              </div>
+                <CardContent className="p-6">
+                  {/* Rating */}
+                  <div className="flex items-center gap-1 mb-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < testimonial.rating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "fill-gray-600 text-gray-600"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Content */}
+                  <p
+                    className="mb-6 leading-relaxed"
+                    style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.9rem" }}
+                  >
+                    "{testimonial.content}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-4">
+                    <Avatar className="w-12 h-12">
+                      <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                      <AvatarFallback
+                        className="bg-gradient-to-br from-violet-600 to-purple-600 text-white font-semibold"
+                      >
+                        {testimonial.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h4 className="font-semibold text-white">{testimonial.name}</h4>
+                      <p className="text-sm" style={{ color: "#C4B5FD" }}>
+                        {testimonial.role} at {testimonial.company}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>

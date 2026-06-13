@@ -1,10 +1,9 @@
 "use client"
 
-import { motion, useScroll, useTransform, useInView, useReducedMotion, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { ChevronDown, XCircle, CheckCircle, Loader2, BookOpen, Award, Sparkles, ArrowRight, Check, Star } from "lucide-react"
+import { ChevronDown, XCircle, CheckCircle, Sparkles, ArrowRight, Check, Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
@@ -46,7 +45,7 @@ function FloatingParticles() {
     const configs = PARTICLE_WORDS.map((word, i) => ({
       word,
       fontSize: 11 + Math.random() * 7,
-      opacity: 0.08 + Math.random() * 0.05,
+      opacity: 0.06 + Math.random() * 0.04,
       top: 10 + (i * 13) % 75,
       left: 5 + (i * 15) % 85,
       duration: 7 + Math.random() * 7,
@@ -118,7 +117,7 @@ function VignetteOverlay() {
     <div
       className="fixed inset-0 z-10 pointer-events-none"
       style={{
-        background: "radial-gradient(ellipse at center, transparent 60%, rgba(139, 92, 246, 0.06) 100%)",
+        background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
       }}
     />
   )
@@ -127,7 +126,7 @@ function VignetteOverlay() {
 // ============================================================================
 // SECTION 1: HERO
 // ============================================================================
-function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | null> }) {
+function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
   const prefersReducedMotion = useReducedMotion()
@@ -135,21 +134,17 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
   const headlineY = useTransform(scrollY, [0, 200], [0, -25])
   const bookScale = useTransform(scrollY, [0, 300], [1, 0.92])
 
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
     <section
       ref={sectionRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: "#FFFFFF", paddingTop: "80px" }}
+      style={{ background: "#1A1A2E", paddingTop: "80px" }}
     >
       {/* CSS Gradient background fallback */}
       <div
-        className="absolute inset-0 opacity-60"
+        className="absolute inset-0 opacity-40"
         style={{
-          background: "radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(245, 158, 11, 0.06) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 30% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%)",
         }}
       />
 
@@ -160,10 +155,10 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-          style={{ background: "rgba(139, 92, 246, 0.1)", border: "1px solid rgba(139, 92, 246, 0.25)" }}
+          style={{ background: "rgba(139, 92, 246, 0.15)", border: "1px solid rgba(139, 92, 246, 0.3)" }}
         >
           <Sparkles className="w-4 h-4" style={{ color: "#F59E0B" }} />
-          <span className="text-sm font-semibold" style={{ color: "#7C3AED" }}>
+          <span className="text-sm font-semibold" style={{ color: "#C4B5FD" }}>
             FREE 7-DAY GUIDE
           </span>
         </motion.div>
@@ -176,7 +171,7 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
             style={{
-              background: "linear-gradient(135deg, #1A1A2E 0%, #7C3AED 50%, #F59E0B 100%)",
+              background: "linear-gradient(135deg, #FFFFFF 0%, #C4B5FD 50%, #F59E0B 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -191,7 +186,7 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-xl md:text-2xl font-light mb-8"
-            style={{ color: "#4B5563", lineHeight: "1.6" }}
+            style={{ color: "rgba(255,255,255,0.65)", lineHeight: "1.6" }}
           >
             You're doing everything right. But somehow,<br />
             you end up in the same place.
@@ -204,7 +199,7 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.35 }}
           className="max-w-2xl mx-auto mb-10"
-          style={{ color: "#6B7280", lineHeight: "1.75", fontSize: "1.05rem" }}
+          style={{ color: "rgba(255,255,255,0.55)", lineHeight: "1.75", fontSize: "1.05rem" }}
         >
           <p>
             You work hard. You deliver. But the promotions never quite arrive. The relationships feel
@@ -236,7 +231,6 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
           transition={{ duration: 0.6, delay: 0.55 }}
         >
           <button
-            onClick={scrollToForm}
             className="px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
@@ -258,7 +252,7 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 1 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          style={{ color: "#9CA3AF" }}
+          style={{ color: "rgba(255,255,255,0.3)" }}
         >
           <span className="text-xs tracking-widest">SCROLL</span>
           <motion.div
@@ -322,7 +316,7 @@ function ProblemSection() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#FEF9F3" }}>
+    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#0F0F1A" }}>
       <div className="max-w-5xl mx-auto px-6">
         {/* Section heading */}
         <motion.div
@@ -334,9 +328,9 @@ function ProblemSection() {
           <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
             WHEN PUSHING HARDER ISN'T WORKING
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: "#1A1A2E" }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
             You don't need more motivation.
-            <span style={{ color: "#7C3AED" }}> You need space to think.</span>
+            <span style={{ color: "#C4B5FD" }}> You need space to think.</span>
           </h2>
         </motion.div>
 
@@ -348,14 +342,14 @@ function ProblemSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-6 rounded-2xl bg-white border transition-all duration-300 hover:shadow-lg cursor-default"
-              style={{ border: "1px solid rgba(139, 92, 246, 0.15)" }}
+              className="p-6 rounded-2xl"
+              style={{ background: "rgba(139, 92, 246, 0.08)", border: "1px solid rgba(139, 92, 246, 0.15)" }}
             >
               <div className="flex items-start gap-4">
                 <span className="text-3xl">{problem.icon}</span>
                 <div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: "#1A1A2E" }}>{problem.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#6B7280" }}>
+                  <h3 className="text-lg font-bold text-white mb-2">{problem.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
                     {problem.text}
                   </p>
                 </div>
@@ -371,7 +365,7 @@ function ProblemSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-12 max-w-2xl mx-auto"
         >
-          <p className="text-lg" style={{ color: "#4B5563", lineHeight: "1.7" }}>
+          <p className="text-lg" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.7" }}>
             <span style={{ color: "#F59E0B", fontWeight: "600" }}>What if 7 days of quiet reflection could help you see the patterns—and choose a different path?</span>
           </p>
         </motion.div>
@@ -406,7 +400,7 @@ function BenefitsSection() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#1A1A2E" }}>
       <div className="max-w-4xl mx-auto px-6">
         {/* Section heading */}
         <motion.div
@@ -418,9 +412,9 @@ function BenefitsSection() {
           <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
             WHAT BECOMES POSSIBLE
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: "#1A1A2E" }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
             7 Days to Clarity.
-            <span style={{ color: "#7C3AED" }}> One simple exercise at a time.</span>
+            <span style={{ color: "#C4B5FD" }}> One simple exercise at a time.</span>
           </h2>
         </motion.div>
 
@@ -432,8 +426,8 @@ function BenefitsSection() {
               initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="flex gap-6 items-start p-6 rounded-2xl bg-white border transition-all duration-300 hover:shadow-md"
-              style={{ border: "1px solid rgba(245, 158, 11, 0.2)" }}
+              className="flex gap-6 items-start p-6 rounded-2xl"
+              style={{ background: "rgba(245, 158, 11, 0.06)", border: "1px solid rgba(245, 158, 11, 0.15)" }}
             >
               <div
                 className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center font-bold text-xl"
@@ -442,8 +436,8 @@ function BenefitsSection() {
                 {benefit.number}
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2" style={{ color: "#1A1A2E" }}>{benefit.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#6B7280" }}>
+                <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
                   {benefit.description}
                 </p>
               </div>
@@ -463,7 +457,7 @@ function BeforeAfterSection() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#FEF9F3" }}>
+    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#0F0F1A" }}>
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -472,11 +466,11 @@ function BeforeAfterSection() {
           className="grid md:grid-cols-2 gap-12"
         >
           {/* Before */}
-          <div className="bg-white p-8 rounded-2xl border" style={{ border: "1px solid rgba(239, 68, 68, 0.2)" }}>
-            <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#EF4444" }}>
+          <div>
+            <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
               BEFORE
             </p>
-            <h3 className="text-2xl font-bold mb-4 leading-tight" style={{ color: "#1A1A2E" }}>
+            <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
               Reacting to everything.<br />
               Choosing nothing.
             </h3>
@@ -487,7 +481,7 @@ function BeforeAfterSection() {
                 "Energy drained by 3pm",
                 "Uncertain if you're moving in the right direction",
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3" style={{ color: "#6B7280" }}>
+                <li key={i} className="flex items-start gap-3" style={{ color: "rgba(255,255,255,0.6)" }}>
                   <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "#EF4444" }} />
                   <span className="text-sm">{item}</span>
                 </li>
@@ -496,11 +490,11 @@ function BeforeAfterSection() {
           </div>
 
           {/* After */}
-          <div className="bg-white p-8 rounded-2xl border" style={{ border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+          <div>
             <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#10B981" }}>
               AFTER 7 DAYS
             </p>
-            <h3 className="text-2xl font-bold mb-4 leading-tight" style={{ color: "#1A1A2E" }}>
+            <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
               Noticing patterns.<br />
               Choosing intentionally.
             </h3>
@@ -511,7 +505,7 @@ function BeforeAfterSection() {
                 "Protecting your energy with boundaries",
                 "Grounded in a direction you've chosen",
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3" style={{ color: "#6B7280" }}>
+                <li key={i} className="flex items-start gap-3" style={{ color: "rgba(255,255,255,0.6)" }}>
                   <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "#10B981" }} />
                   <span className="text-sm">{item}</span>
                 </li>
@@ -583,7 +577,7 @@ function TestimonialsSection() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-16 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+    <section ref={sectionRef} className="py-16 relative overflow-hidden" style={{ background: "#1A1A2E" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Section heading */}
         <motion.div
@@ -595,10 +589,10 @@ function TestimonialsSection() {
           <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
             WHAT PEOPLE ARE SAYING
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold" style={{ color: "#1A1A2E" }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
             Real results from real people.
           </h2>
-          <p className="text-lg mt-4 max-w-2xl mx-auto" style={{ color: "#6B7280" }}>
+          <p className="text-lg mt-4 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.6)" }}>
             Don't just take our word for it. Here's what people have to say about their 7-day clarity journey.
           </p>
         </motion.div>
@@ -613,8 +607,9 @@ function TestimonialsSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card
-                className="h-full transition-all duration-300 hover:shadow-xl bg-white border"
+                className="h-full transition-all duration-300 hover:shadow-xl"
                 style={{
+                  background: "rgba(139, 92, 246, 0.08)",
                   border: "1px solid rgba(139, 92, 246, 0.15)",
                 }}
               >
@@ -627,7 +622,7 @@ function TestimonialsSection() {
                         className={`w-4 h-4 ${
                           i < testimonial.rating
                             ? "fill-yellow-400 text-yellow-400"
-                            : "fill-gray-300 text-gray-300"
+                            : "fill-gray-600 text-gray-600"
                         }`}
                       />
                     ))}
@@ -636,7 +631,7 @@ function TestimonialsSection() {
                   {/* Content */}
                   <p
                     className="mb-6 leading-relaxed"
-                    style={{ color: "#4B5563", fontSize: "0.9rem" }}
+                    style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.9rem" }}
                   >
                     "{testimonial.content}"
                   </p>
@@ -655,8 +650,8 @@ function TestimonialsSection() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h4 className="font-semibold" style={{ color: "#1A1A2E" }}>{testimonial.name}</h4>
-                      <p className="text-sm" style={{ color: "#7C3AED" }}>
+                      <h4 className="font-semibold text-white">{testimonial.name}</h4>
+                      <p className="text-sm" style={{ color: "#C4B5FD" }}>
                         {testimonial.role} at {testimonial.company}
                       </p>
                     </div>
@@ -672,205 +667,19 @@ function TestimonialsSection() {
 }
 
 // ============================================================================
-// SECTION 6: FORM
+// SECTION 6: FINAL CTA
 // ============================================================================
-function OptInFormSection({ forwardedRef }: { forwardedRef: React.RefObject<HTMLDivElement | null> }) {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const router = useRouter()
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }))
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Validation
-    const newErrors: Record<string, string> = {}
-    if (!formData.name.trim()) {
-      newErrors.name = "Please enter your name"
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Please enter your email"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email"
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-      const response = await fetch("/api/submit-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-
-      if (!response.ok) {
-        throw new Error("Submission failed")
-      }
-
-      // Store in localStorage as backup
-      localStorage.setItem("amaze_v2_lead", JSON.stringify({
-        ...formData,
-        timestamp: Date.now(),
-      }))
-
-      // Redirect to thank you page
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      router.push("/thank-you")
-    } catch (error) {
-      console.error("Form submission error:", error)
-      // Fallback to localStorage
-      localStorage.setItem("amaze_v2_lead", JSON.stringify({
-        ...formData,
-        timestamp: Date.now(),
-      }))
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      router.push("/thank-you")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  return (
-    <section
-      ref={forwardedRef}
-      className="py-16 relative overflow-hidden"
-      style={{ background: "#FEF9F3" }}
-    >
-      <div className="max-w-xl mx-auto px-6">
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
-            YOUR 7-DAY CLARITY JOURNEY STARTS HERE
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: "#1A1A2E" }}>
-            Where should we send your free guide?
-          </h2>
-        </motion.div>
-
-        {/* Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="p-8 rounded-3xl bg-white border shadow-lg"
-          style={{ border: "1px solid rgba(139, 92, 246, 0.15)" }}
-        >
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name field */}
-            <div>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Your name"
-                className={`w-full px-5 py-4 rounded-xl bg-gray-50 border transition-all outline-none ${
-                  errors.name
-                    ? "border-red-500/50 focus:border-red-500"
-                    : "border-gray-200 focus:border-violet-500"
-                } placeholder-gray-400`}
-                disabled={isSubmitting}
-              />
-              {errors.name && <p className="text-red-400 text-xs mt-2">{errors.name}</p>}
-            </div>
-
-            {/* Email field */}
-            <div>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                placeholder="Your email"
-                className={`w-full px-5 py-4 rounded-xl bg-gray-50 border transition-all outline-none ${
-                  errors.email
-                    ? "border-red-500/50 focus:border-red-500"
-                    : "border-gray-200 focus:border-violet-500"
-                } placeholder-gray-400`}
-                disabled={isSubmitting}
-              />
-              {errors.email && <p className="text-red-400 text-xs mt-2">{errors.email}</p>}
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              disabled={isSubmitting || !formData.name || !formData.email}
-              className="w-full py-4 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
-              style={{
-                background: !formData.name || !formData.email
-                  ? "linear-gradient(135deg, #92400E, #B45309)"
-                  : "linear-gradient(135deg, #10B981, #059669)",
-                color: "#FFFFFF",
-              }}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <BookOpen className="w-5 h-5" />
-                  Send Me the Free Guide
-                </>
-              )}
-            </button>
-
-            {/* Trust copy */}
-            <div className="flex items-center justify-center gap-4 text-xs" style={{ color: "#9CA3AF" }}>
-              <span>🔒 Free</span>
-              <span>•</span>
-              <span>No spam</span>
-              <span>•</span>
-              <span>Instant access</span>
-            </div>
-          </form>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================================================
-// SECTION 7: FINAL CTA
-// ============================================================================
-function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement | null> }) {
+function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
 
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
+    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#0F0F1A" }}>
       {/* Background gradient */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-30"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(139, 92, 246, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, rgba(139, 92, 246, 0.2) 0%, transparent 70%)",
         }}
       />
 
@@ -886,7 +695,7 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
             src={BOOK_IMAGE}
             alt="7 Days to Clarity Guide"
             className="object-cover rounded-lg shadow-2xl w-full h-full"
-            style={{ filter: "drop-shadow(0 20px 40px rgba(139, 92, 246, 0.25))" }}
+            style={{ filter: "drop-shadow(0 20px 40px rgba(139, 92, 246, 0.4))" }}
           />
         </motion.div>
 
@@ -895,9 +704,9 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
           initial={{ opacity: 0, y: 25 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
           style={{
-            background: "linear-gradient(135deg, #1A1A2E 0%, #7C3AED 100%)",
+            background: "linear-gradient(135deg, #FFFFFF 0%, #C4B5FD 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -912,7 +721,7 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg mb-10 max-w-2xl mx-auto"
-          style={{ color: "#6B7280", lineHeight: "1.7" }}
+          style={{ color: "rgba(255,255,255,0.65)", lineHeight: "1.7" }}
         >
           Start with ten quiet minutes. Pause the noise, understand what has been repeating,
           and take one more intentional step toward the person you're becoming.
@@ -925,18 +734,17 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <button
-            onClick={scrollToForm}
             className="px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #F59E0B, #D97706)",
               color: "#FFFFFF",
-              boxShadow: "0 10px 40px rgba(245, 158, 11, 0.25)",
+              boxShadow: "0 10px 40px rgba(245, 158, 11, 0.3)",
             }}
           >
             Start My Free 7-Day Clarity Reset
             <ArrowRight className="w-5 h-5" />
           </button>
-          <p className="text-sm mt-4" style={{ color: "#9CA3AF" }}>
+          <p className="text-sm mt-4" style={{ color: "rgba(255,255,255,0.35)" }}>
             Free • Takes 60 seconds • No email spam
           </p>
         </motion.div>
@@ -950,17 +758,17 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
 // ============================================================================
 function Footer() {
   return (
-    <footer className="py-12 border-t" style={{ borderColor: "rgba(139, 92, 246, 0.1)", background: "#FEF9F3" }}>
+    <footer className="py-12 border-t" style={{ borderColor: "rgba(255,255,255,0.08)", background: "#0A0E14" }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-1" style={{ color: "#1A1A2E" }}>Amaze Motivation</h3>
-            <p className="text-sm" style={{ color: "#6B7280" }}>Reflect. Understand. Grow.</p>
+            <h3 className="text-xl font-bold text-white mb-1">Amaze Motivation</h3>
+            <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>Reflect. Understand. Grow.</p>
           </div>
 
           {/* Copyright */}
-          <p className="text-sm" style={{ color: "#9CA3AF" }}>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
             © 2026 Amaze Motivation. All rights reserved.
           </p>
         </div>
@@ -973,12 +781,10 @@ function Footer() {
 // MAIN PAGE COMPONENT
 // ============================================================================
 export default function V2Page() {
-  const formRef = useRef<HTMLDivElement>(null)
-
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Background */}
-      <div className="fixed inset-0 -z-10" style={{ background: "#FEF9F3" }} />
+      <div className="fixed inset-0 -z-10" style={{ background: "#0A0E14" }} />
 
       {/* Effects */}
       <ScrollProgressBar />
@@ -986,7 +792,7 @@ export default function V2Page() {
       <VignetteOverlay />
 
       {/* Sections */}
-      <HeroSection formRef={formRef} />
+      <HeroSection />
 
       <GoldDivider />
 
@@ -998,9 +804,7 @@ export default function V2Page() {
 
       <TestimonialsSection />
 
-      <OptInFormSection forwardedRef={formRef} />
-
-      <FinalCTASection formRef={formRef} />
+      <FinalCTASection />
 
       <Footer />
     </div>

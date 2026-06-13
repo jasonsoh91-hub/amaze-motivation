@@ -2,9 +2,8 @@
 
 import { motion, useScroll, useTransform, useInView, useReducedMotion, AnimatePresence } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { ChevronDown, XCircle, CheckCircle, Loader2, BookOpen, Award, Sparkles, ArrowRight, Check, Star } from "lucide-react"
+import { ChevronDown, XCircle, CheckCircle, Sparkles, ArrowRight, Check, Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
@@ -127,17 +126,13 @@ function VignetteOverlay() {
 // ============================================================================
 // SECTION 1: HERO
 // ============================================================================
-function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | null> }) {
+function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
   const prefersReducedMotion = useReducedMotion()
   const { scrollY } = useScroll()
   const headlineY = useTransform(scrollY, [0, 200], [0, -25])
   const bookScale = useTransform(scrollY, [0, 300], [1, 0.92])
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
 
   return (
     <section
@@ -236,7 +231,6 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
           transition={{ duration: 0.6, delay: 0.55 }}
         >
           <button
-            onClick={scrollToForm}
             className="px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
@@ -247,7 +241,7 @@ function HeroSection({ formRef }: { formRef: React.RefObject<HTMLDivElement | nu
             Get My Free Clarity Guide
             <ArrowRight className="w-5 h-5" />
           </button>
-          <p className="text-sm mt-4" style={{ color: "rgba(255,255,255,0.35)" }}>
+          <p className="text-sm mt-4" style={{ color: "#9CA3AF" }}>
             Takes 60 seconds • No spam • Instant access
           </p>
         </motion.div>
@@ -672,197 +666,11 @@ function TestimonialsSection() {
 }
 
 // ============================================================================
-// SECTION 6: FORM
+// SECTION 6: FINAL CTA
 // ============================================================================
-function OptInFormSection({ forwardedRef }: { forwardedRef: React.RefObject<HTMLDivElement | null> }) {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const router = useRouter()
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }))
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Validation
-    const newErrors: Record<string, string> = {}
-    if (!formData.name.trim()) {
-      newErrors.name = "Please enter your name"
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Please enter your email"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email"
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-      const response = await fetch("/api/submit-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-
-      if (!response.ok) {
-        throw new Error("Submission failed")
-      }
-
-      // Store in localStorage as backup
-      localStorage.setItem("amaze_v2_lead", JSON.stringify({
-        ...formData,
-        timestamp: Date.now(),
-      }))
-
-      // Redirect to thank you page
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      router.push("/thank-you")
-    } catch (error) {
-      console.error("Form submission error:", error)
-      // Fallback to localStorage
-      localStorage.setItem("amaze_v2_lead", JSON.stringify({
-        ...formData,
-        timestamp: Date.now(),
-      }))
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      router.push("/thank-you")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  return (
-    <section
-      ref={forwardedRef}
-      className="py-16 relative overflow-hidden"
-      style={{ background: "#FEF9F3" }}
-    >
-      <div className="max-w-xl mx-auto px-6">
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
-            YOUR 7-DAY CLARITY JOURNEY STARTS HERE
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ color: "#1A1A2E" }}>
-            Where should we send your free guide?
-          </h2>
-        </motion.div>
-
-        {/* Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="p-8 rounded-3xl bg-white border shadow-lg"
-          style={{ border: "1px solid rgba(139, 92, 246, 0.15)" }}
-        >
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name field */}
-            <div>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Your name"
-                className={`w-full px-5 py-4 rounded-xl bg-gray-50 border transition-all outline-none ${
-                  errors.name
-                    ? "border-red-500/50 focus:border-red-500"
-                    : "border-gray-200 focus:border-violet-500"
-                } placeholder-gray-400`}
-                disabled={isSubmitting}
-              />
-              {errors.name && <p className="text-red-400 text-xs mt-2">{errors.name}</p>}
-            </div>
-
-            {/* Email field */}
-            <div>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                placeholder="Your email"
-                className={`w-full px-5 py-4 rounded-xl bg-gray-50 border transition-all outline-none ${
-                  errors.email
-                    ? "border-red-500/50 focus:border-red-500"
-                    : "border-gray-200 focus:border-violet-500"
-                } placeholder-gray-400`}
-                disabled={isSubmitting}
-              />
-              {errors.email && <p className="text-red-400 text-xs mt-2">{errors.email}</p>}
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              disabled={isSubmitting || !formData.name || !formData.email}
-              className="w-full py-4 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
-              style={{
-                background: !formData.name || !formData.email
-                  ? "linear-gradient(135deg, #92400E, #B45309)"
-                  : "linear-gradient(135deg, #10B981, #059669)",
-                color: "#FFFFFF",
-              }}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <BookOpen className="w-5 h-5" />
-                  Send Me the Free Guide
-                </>
-              )}
-            </button>
-
-            {/* Trust copy */}
-            <div className="flex items-center justify-center gap-4 text-xs" style={{ color: "#9CA3AF" }}>
-              <span>🔒 Free</span>
-              <span>•</span>
-              <span>No spam</span>
-              <span>•</span>
-              <span>Instant access</span>
-            </div>
-          </form>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ============================================================================
-// SECTION 7: FINAL CTA
-// ============================================================================
-function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement | null> }) {
+function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
 
   return (
     <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#FFFFFF" }}>
@@ -925,7 +733,6 @@ function FinalCTASection({ formRef }: { formRef: React.RefObject<HTMLDivElement 
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <button
-            onClick={scrollToForm}
             className="px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #F59E0B, #D97706)",
@@ -972,9 +779,7 @@ function Footer() {
 // ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
-export default function V2Page() {
-  const formRef = useRef<HTMLDivElement>(null)
-
+export default function V3Page() {
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Background */}
@@ -986,7 +791,7 @@ export default function V2Page() {
       <VignetteOverlay />
 
       {/* Sections */}
-      <HeroSection formRef={formRef} />
+      <HeroSection />
 
       <GoldDivider />
 
@@ -998,9 +803,7 @@ export default function V2Page() {
 
       <TestimonialsSection />
 
-      <OptInFormSection forwardedRef={formRef} />
-
-      <FinalCTASection formRef={formRef} />
+      <FinalCTASection />
 
       <Footer />
     </div>

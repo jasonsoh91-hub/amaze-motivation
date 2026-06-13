@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useInView, useReducedMotion } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
 import Image from "next/image"
-import { ChevronDown, XCircle, CheckCircle, Sparkles, ArrowRight, Check, Star } from "lucide-react"
+import { ChevronDown, XCircle, CheckCircle, Loader2, Sparkles, ArrowRight, Check, Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
@@ -667,7 +667,179 @@ function TestimonialsSection() {
 }
 
 // ============================================================================
-// SECTION 6: FINAL CTA
+// SECTION 6: FORM
+// ============================================================================
+function OptInFormSection() {
+  const ref = useRef<HTMLElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.2 })
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Validation
+    const newErrors: Record<string, string> = {}
+    if (!formData.name.trim()) {
+      newErrors.name = "Please enter your name"
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Please enter your email"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email"
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("/api/submit-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Submission failed")
+      }
+
+      setIsSuccess(true)
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      setFormData({ name: "", email: "" })
+      setIsSuccess(false)
+    } catch (error) {
+      console.error("Form submission error:", error)
+      setErrors({ email: "Something went wrong. Please try again." })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <section ref={ref} className="py-16 relative overflow-hidden" style={{ background: "#0F0F1A" }}>
+      <div className="max-w-xl mx-auto px-6">
+        {/* Section heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: "#F59E0B" }}>
+            YOUR 7-DAY CLARITY JOURNEY STARTS HERE
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+            Where should we send your free guide?
+          </h2>
+        </motion.div>
+
+        {/* Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="p-8 rounded-3xl"
+          style={{ background: "rgba(139, 92, 246, 0.1)", border: "1px solid rgba(139, 92, 246, 0.2)" }}
+        >
+          {isSuccess ? (
+            <div className="text-center py-8">
+              <CheckCircle className="w-16 h-16 mx-auto mb-4" style={{ color: "#10B981" }} />
+              <h3 className="text-2xl font-bold text-white mb-2">You're in!</h3>
+              <p style={{ color: "rgba(255,255,255,0.7)" }}>Check your email for the free guide.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name field */}
+              <div>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder="Your name"
+                  className={`w-full px-5 py-4 rounded-xl bg-white/5 border transition-all outline-none ${
+                    errors.name
+                      ? "border-red-500/50 focus:border-red-500"
+                      : "border-white/10 focus:border-violet-500"
+                  } text-white placeholder-white/40`}
+                  disabled={isSubmitting}
+                />
+                {errors.name && <p className="text-red-400 text-xs mt-2">{errors.name}</p>}
+              </div>
+
+              {/* Email field */}
+              <div>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  placeholder="Your email"
+                  className={`w-full px-5 py-4 rounded-xl bg-white/5 border transition-all outline-none ${
+                    errors.email
+                      ? "border-red-500/50 focus:border-red-500"
+                      : "border-white/10 focus:border-violet-500"
+                  } text-white placeholder-white/40`}
+                  disabled={isSubmitting}
+                />
+                {errors.email && <p className="text-red-400 text-xs mt-2">{errors.email}</p>}
+              </div>
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={isSubmitting || !formData.name || !formData.email}
+                className="w-full py-4 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
+                style={{
+                  background: !formData.name || !formData.email
+                    ? "linear-gradient(135deg, #92400E, #B45309)"
+                    : "linear-gradient(135deg, #10B981, #059669)",
+                  color: "#FFFFFF",
+                }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  "Send Me the Free Guide"
+                )}
+              </button>
+
+              {/* Trust copy */}
+              <div className="flex items-center justify-center gap-4 text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <span>🔒 Free</span>
+                <span>•</span>
+                <span>No spam</span>
+                <span>•</span>
+                <span>Instant access</span>
+              </div>
+            </form>
+          )}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// SECTION 7: FINAL CTA
 // ============================================================================
 function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -803,6 +975,8 @@ export default function V2Page() {
       <BeforeAfterSection />
 
       <TestimonialsSection />
+
+      <OptInFormSection />
 
       <FinalCTASection />
 

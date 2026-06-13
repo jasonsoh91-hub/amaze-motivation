@@ -583,7 +583,7 @@ function TestimonialsSection() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden" style={{ background: "#1A1A2E" }}>
+    <section ref={sectionRef} className="py-16 relative overflow-hidden" style={{ background: "#1A1A2E" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Section heading */}
         <motion.div
@@ -752,7 +752,7 @@ function OptInFormSection({ forwardedRef }: { forwardedRef: React.RefObject<HTML
   return (
     <section
       ref={forwardedRef}
-      className="py-24 relative overflow-hidden"
+      className="py-16 relative overflow-hidden"
       style={{ background: "#0F0F1A" }}
     >
       <div className="max-w-xl mx-auto px-6">
